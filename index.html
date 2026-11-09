@@ -1,0 +1,856 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Fresh Aroma | Delicious Food</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  color: #222;
+  background: #fff;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 7%;
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 12px #00000010;
+}
+
+.logo {
+  color: #ff6600;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+}
+
+.cart-link {
+  background: #ff6600;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+
+.hero {
+  padding: 90px 8%;
+  text-align: center;
+  background: #fff3e9;
+}
+
+.hero h1 {
+  font-size: 46px;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.hero h1 span {
+  color: #ff6600;
+}
+
+.hero p {
+  color: #666;
+  line-height: 1.7;
+  margin-bottom: 25px;
+}
+
+.btn {
+  display: inline-block;
+  background: #ff6600;
+  color: white;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.menu {
+  padding: 70px 7%;
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.section-heading h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.section-heading span {
+  color: #ff6600;
+}
+
+.section-heading p {
+  color: #777;
+}
+
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.food-card {
+  border-radius: 14px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 5px 22px #00000012;
+  transition: 0.3s;
+}
+
+.food-card:hover {
+  transform: translateY(-5px);
+}
+
+.food-card img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  display: block;
+}
+
+.food-info {
+  padding: 18px;
+}
+
+.food-info h3 {
+  margin-bottom: 9px;
+}
+
+.food-info p {
+  font-size: 13px;
+  color: #777;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.price {
+  color: #ff6600;
+  font-weight: bold;
+  font-size: 19px;
+}
+
+.add-btn {
+  background: #ff6600;
+  color: white;
+  border: none;
+  padding: 11px 14px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.add-btn:hover {
+  background: #e65c00;
+}
+
+/* CART */
+
+.cart-section {
+  background: #fff7f0;
+  padding: 65px 7%;
+}
+
+.cart-section h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.cart-box {
+  background: white;
+  max-width: 750px;
+  margin: auto;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 5px 20px #0000000d;
+}
+
+.empty {
+  text-align: center;
+  color: #888;
+  padding: 20px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.cart-item h4 {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.cart-item small {
+  color: #ff6600;
+  font-weight: bold;
+}
+
+.quantity {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.quantity button {
+  border: none;
+  background: #fff0e5;
+  color: #ff6600;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.remove-btn {
+  border: none;
+  background: none;
+  color: #d33;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.total-area {
+  margin-top: 20px;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 13px 0;
+  font-size: 15px;
+}
+
+.grand-total {
+  font-size: 21px;
+  font-weight: bold;
+  color: #ff6600;
+  border-top: 1px solid #eee;
+  padding-top: 18px;
+}
+
+.customer-form {
+  margin-top: 25px;
+}
+
+.customer-form label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.customer-form input,
+.customer-form textarea {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font: inherit;
+}
+
+.customer-form textarea {
+  resize: vertical;
+}
+
+.checkout-btn {
+  width: 100%;
+  background: #168b45;
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 9px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.checkout-btn:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+.about {
+  padding: 60px 8%;
+  background: #fff3e9;
+  text-align: center;
+}
+
+.about p {
+  color: #666;
+  line-height: 1.8;
+  max-width: 600px;
+  margin: 15px auto 0;
+}
+
+footer {
+  background: #222;
+  color: white;
+  text-align: center;
+  padding: 25px;
+}
+
+@media(max-width: 800px) {
+  .food-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media(max-width: 550px) {
+  header {
+    padding: 17px 5%;
+  }
+
+  .logo {
+    font-size: 19px;
+  }
+
+  nav {
+    gap: 10px;
+  }
+
+  nav a {
+    font-size: 12px;
+  }
+
+  .hero {
+    padding: 75px 6%;
+  }
+
+  .hero h1 {
+    font-size: 34px;
+  }
+
+  .food-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .menu,
+  .cart-section {
+    padding: 50px 5%;
+  }
+
+  .cart-box {
+    padding: 17px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">Fresh Aroma.</div>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#menu">Menu</a>
+    <a href="#cart" class="cart-link">
+      Cart (<span id="cart-count">0</span>)
+    </a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <h1>
+    Every Bite Tells<br>
+    <span>A Delicious Story.</span>
+  </h1>
+
+  <p>
+    Fresh ingredients, amazing flavours
+    and unforgettable meals.
+  </p>
+
+  <a href="#menu" class="btn">Explore Our Menu</a>
+</section>
+
+<section class="menu" id="menu">
+
+  <div class="section-heading">
+    <h2>Our <span>Special Menu</span></h2>
+    <p>Discover your next favourite meal.</p>
+  </div>
+
+  <div class="food-grid" id="food-grid"></div>
+
+</section>
+
+<section class="cart-section" id="cart">
+
+  <h2>Your Shopping Cart 🛒</h2>
+
+  <div class="cart-box">
+
+    <div id="cart-items">
+      <p class="empty">Your cart is currently empty.</p>
+    </div>
+
+    <div class="total-area">
+
+      <div class="total-row">
+        <span>Subtotal</span>
+        <strong id="subtotal">₦0</strong>
+      </div>
+
+      <div class="total-row">
+        <span>Delivery fee</span>
+        <strong id="delivery">₦0</strong>
+      </div>
+
+      <div class="total-row grand-total">
+        <span>Total</span>
+        <span id="grand-total">₦0</span>
+      </div>
+
+    </div>
+
+    <div class="customer-form">
+
+      <label for="customer-name">Your full name</label>
+      <input
+        type="text"
+        id="customer-name"
+        placeholder="Enter your name">
+
+      <label for="customer-address">Delivery address</label>
+      <textarea
+        id="customer-address"
+        rows="3"
+        placeholder="Enter your delivery address"></textarea>
+
+      <button
+        class="checkout-btn"
+        id="checkout"
+        onclick="checkout()"
+        disabled>
+        Order via WhatsApp
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section class="about">
+  <h2>About Fresh Aroma</h2>
+  <p>
+    At Fresh Aroma, we believe every meal should
+    be special. Fresh ingredients and amazing
+    flavours make every experience memorable.
+  </p>
+</section>
+
+<footer>
+  © 2026 Fresh Aroma. All rights reserved.
+</footer>
+
+<script>
+
+// RESTAURANT SETTINGS
+
+const WHATSAPP_NUMBER = "2349139225724";
+const DELIVERY_FEE = 0;
+
+// FOOD PRODUCTS
+
+const products = [
+  {
+    id: 1,
+    name: "Special Fried Rice",
+    price: 4500,
+    image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=700",
+    description: "Delicious fried rice with fresh vegetables."
+  },
+  {
+    id: 2,
+    name: "Classic Burger",
+    price: 5000,
+    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58bd?w=700",
+    description: "Juicy burger with fresh toppings."
+  },
+  {
+    id: 3,
+    name: "Cheese Pizza",
+    price: 7500,
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=700",
+    description: "Freshly baked pizza with cheese."
+  },
+  {
+    id: 4,
+    name: "Vegetable Salad",
+    price: 3500,
+    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=700",
+    description: "Fresh vegetables and tasty toppings."
+  },
+  {
+    id: 5,
+    name: "Healthy Food Bowl",
+    price: 4000,
+    image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=700",
+    description: "A colourful and satisfying meal."
+  },
+  {
+    id: 6,
+    name: "Grilled Special",
+    price: 6500,
+    image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=700",
+    description: "A delicious freshly grilled meal."
+  }
+];
+
+// LOCAL STORAGE
+
+const STORAGE_KEY = "freshAromaCart";
+
+function loadCart() {
+  try {
+    const savedCart = JSON.parse(
+      localStorage.getItem(STORAGE_KEY)
+    );
+
+    if (
+      !savedCart ||
+      typeof savedCart !== "object" ||
+      Array.isArray(savedCart)
+    ) {
+      return {};
+    }
+
+    const validCart = {};
+
+    for (const [id, quantity] of Object.entries(savedCart)) {
+      const product = products.find(
+        item => item.id === Number(id)
+      );
+
+      if (
+        product &&
+        Number.isSafeInteger(quantity) &&
+        quantity > 0 &&
+        quantity <= 99
+      ) {
+        validCart[id] = quantity;
+      }
+    }
+
+    return validCart;
+
+  } catch (error) {
+    console.log("Could not load cart:", error);
+    return {};
+  }
+}
+
+let cart = loadCart();
+
+function saveCart() {
+  try {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(cart)
+    );
+  } catch (error) {
+    console.log("Could not save cart:", error);
+    alert("Could not save your cart.");
+  }
+}
+
+// MONEY FORMAT
+
+function formatMoney(amount) {
+  return "₦" + amount.toLocaleString("en-NG");
+}
+
+// DISPLAY PRODUCTS
+
+function displayProducts() {
+
+  const grid = document.getElementById("food-grid");
+
+  grid.innerHTML = products.map(product => `
+
+    <div class="food-card">
+
+      <img
+        src="${product.image}"
+        alt="${product.name}"
+        loading="lazy">
+
+      <div class="food-info">
+
+        <h3>${product.name}</h3>
+
+        <p>${product.description}</p>
+
+        <div class="price-row">
+
+          <span class="price">
+            ${formatMoney(product.price)}
+          </span>
+
+          <button class="add-btn"
+            onclick="addToCart(${product.id})">
+            Add to Cart +
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `).join("");
+
+}
+
+// ADD TO CART
+
+function addToCart(id) {
+
+  if (cart[id] && cart[id] >= 99) {
+    alert("Maximum quantity reached.");
+    return;
+  }
+
+  cart[id] = (cart[id] || 0) + 1;
+
+  updateCart();
+
+}
+
+// CHANGE QUANTITY
+
+function changeQuantity(id, amount) {
+
+  if (!cart[id]) return;
+
+  cart[id] += amount;
+
+  if (cart[id] <= 0) {
+    delete cart[id];
+  }
+
+  updateCart();
+
+}
+
+// REMOVE ITEM
+
+function removeItem(id) {
+
+  delete cart[id];
+
+  updateCart();
+
+}
+
+// UPDATE CART AND SAVE
+
+function updateCart() {
+
+  saveCart();
+
+  const container =
+    document.getElementById("cart-items");
+
+  let subtotal = 0;
+  let count = 0;
+
+  const entries = Object.entries(cart);
+
+  if (entries.length === 0) {
+
+    container.innerHTML =
+      '<p class="empty">Your cart is currently empty.</p>';
+
+  } else {
+
+    container.innerHTML = entries.map(([id, quantity]) => {
+
+      const product = products.find(
+        item => item.id === Number(id)
+      );
+
+      const itemTotal = product.price * quantity;
+
+      subtotal += itemTotal;
+      count += quantity;
+
+      return `
+
+        <div class="cart-item">
+
+          <div>
+            <h4>${product.name}</h4>
+            <small>${formatMoney(itemTotal)}</small>
+          </div>
+
+          <div class="quantity">
+
+            <button onclick="changeQuantity(${id}, -1)">
+              −
+            </button>
+
+            <strong>${quantity}</strong>
+
+            <button onclick="changeQuantity(${id}, 1)">
+              +
+            </button>
+
+          </div>
+
+          <button class="remove-btn"
+            onclick="removeItem(${id})">
+            Remove
+          </button>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+  }
+
+  const delivery = count > 0 ? DELIVERY_FEE : 0;
+  const total = subtotal + delivery;
+
+  document.getElementById("cart-count").textContent = count;
+
+  document.getElementById("subtotal").textContent =
+    formatMoney(subtotal);
+
+  document.getElementById("delivery").textContent =
+    formatMoney(delivery);
+
+  document.getElementById("grand-total").textContent =
+    formatMoney(total);
+
+  document.getElementById("checkout").disabled =
+    count === 0;
+
+}
+
+// WHATSAPP CHECKOUT
+
+function checkout() {
+
+  const name = document.getElementById("customer-name")
+    .value.trim();
+
+  const address = document.getElementById("customer-address")
+    .value.trim();
+
+  if (!name || !address) {
+    alert("Please enter your name and address.");
+    return;
+  }
+
+  const entries = Object.entries(cart);
+
+  if (entries.length === 0) {
+    alert("Your cart is empty!");
+    return;
+  }
+
+  let subtotal = 0;
+  let order = [];
+
+  entries.forEach(([id, quantity]) => {
+
+    const product = products.find(
+      item => item.id === Number(id)
+    );
+
+    const itemTotal = product.price * quantity;
+
+    subtotal += itemTotal;
+
+    order.push(
+      `${product.name}\n` +
+      `Quantity: ${quantity}\n` +
+      `Price: ${formatMoney(itemTotal)}`
+    );
+
+  });
+
+  const total = subtotal + DELIVERY_FEE;
+
+  const message =
+    `HELLO FRESH AROMA!\n\n` +
+    `I would like to place an order.\n\n` +
+    `CUSTOMER DETAILS\n` +
+    `Name: ${name}\n` +
+    `Address: ${address}\n\n` +
+    `MY ORDER\n\n` +
+    order.join("\n\n") +
+    `\n\nSubtotal: ${formatMoney(subtotal)}` +
+    `\nDelivery: ${formatMoney(DELIVERY_FEE)}` +
+    `\nTOTAL: ${formatMoney(total)}` +
+    `\n\nPlease confirm my order. Thank you!`;
+
+  const whatsappURL =
+    "https://wa.me/" + WHATSAPP_NUMBER +
+    "?text=" + encodeURIComponent(message);
+
+  window.open(whatsappURL, "_blank");
+
+}
+
+// START WEBSITE
+
+displayProducts();
+updateCart();
+
+</script>
+
+</body>
+</html>
